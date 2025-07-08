@@ -51,12 +51,34 @@
 
     <div id="app-container" class="flex flex-col min-h-screen">
 
-        <!-- Header -->
-        <header class="bg-white shadow-md sticky top-0 z-10">
-            <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-                <h1 class="text-2xl font-bold text-blue-600">EasyKey</h1>
-                <p class="text-sm text-slate-500 hidden sm:block">Secure Onboarding</p>
-            </div>
+        <!-- Header with Responsive Navbar -->
+        <header class="bg-white shadow-md sticky top-0 z-20">
+            <nav class="container mx-auto px-6 py-3">
+                <div class="flex justify-between items-center">
+                    <a href="#" class="text-2xl font-bold text-blue-600">EasyKey</a>
+                    
+                    <!-- Desktop Menu -->
+                    <div class="hidden md:flex items-center space-x-6">
+                        <a href="#" class="text-slate-600 hover:text-blue-600 transition-colors">Home</a>
+                        <a href="#" class="text-slate-600 hover:text-blue-600 transition-colors">About Us</a>
+                    </div>
+
+                    <!-- Mobile Menu Button -->
+                    <div class="md:hidden">
+                        <button id="mobile-menu-btn" class="text-slate-600 hover:text-blue-600 focus:outline-none">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu -->
+                <div id="mobile-menu" class="hidden md:hidden mt-4">
+                    <a href="#" class="block py-2 px-4 text-sm text-slate-600 hover:bg-slate-100 rounded">Home</a>
+                    <a href="#" class="block py-2 px-4 text-sm text-slate-600 hover:bg-slate-100 rounded">About Us</a>
+                </div>
+            </nav>
         </header>
 
         <!-- Main Content -->
@@ -94,6 +116,19 @@
                 <!-- Step 2: Bank Details View -->
                 <div id="view-2" class="view">
                      <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-6 sm:p-8">
+                        <!-- Personal Details Review Accordion -->
+                        <div class="mb-8">
+                             <div class="accordion-item rounded-lg border border-slate-200">
+                                <button id="page2-accordion-button" class="confirmation-accordion-button w-full flex justify-between items-center text-left p-4 font-semibold text-slate-600 focus:outline-none">
+                                    <span class="text-md">Review Personal Details</span>
+                                    <svg class="accordion-arrow w-5 h-5 text-slate-500 shrink-0 transition-transform duration-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" /></svg>
+                                </button>
+                                <div id="page2-accordion-content" class="confirmation-accordion-content p-4 pt-0">
+                                    <!-- Populated by JS -->
+                                </div>
+                            </div>
+                        </div>
+
                         <h2 class="text-xl sm:text-2xl font-bold text-slate-800 mb-1">Step 2: Bank Details</h2>
                         <p class="text-slate-600 mb-6">Your payment information is safe with us.</p>
                         <form id="form-2" class="space-y-4">
@@ -162,15 +197,10 @@
 
     </div>
     
-    <!-- Success Modal -->
-    <div id="success-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
-        <div class="bg-white rounded-lg shadow-xl p-8 m-4 max-w-sm text-center">
-            <div class="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
-                <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
-            </div>
-            <h3 class="text-2xl font-bold text-slate-800 mb-2">Success!</h3>
-            <p class="text-slate-600">Your application has been submitted successfully.</p>
-        </div>
+    <!-- Toast Notification -->
+    <div id="toast-notification" class="fixed bottom-8 right-8 bg-green-600 text-white py-3 px-6 rounded-lg shadow-lg flex items-center transform translate-y-24 opacity-0 transition-all duration-500 ease-in-out z-50">
+        <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <span>Application submitted successfully!</span>
     </div>
 
 
@@ -197,17 +227,25 @@
                     this.elements.prevBtn2 = document.getElementById('prev-btn-2');
                     this.elements.prevBtn3 = document.getElementById('prev-btn-3');
                     this.elements.submitBtn = document.getElementById('submit-btn');
-                    this.elements.successModal = document.getElementById('success-modal');
+                    this.elements.toast = document.getElementById('toast-notification');
                     
                     // Forms
                     this.elements.form1 = document.getElementById('form-1');
                     this.elements.form2 = document.getElementById('form-2');
 
-                    // Confirmation Accordions
+                    // Page 2 Accordion
+                    this.elements.page2AccordionBtn = document.getElementById('page2-accordion-button');
+                    this.elements.page2AccordionContent = document.getElementById('page2-accordion-content');
+
+                    // Page 3 Confirmation Accordions
                     this.elements.confBtn1 = document.getElementById('confirmation-button-1');
                     this.elements.confContent1 = document.getElementById('confirmation-content-1');
                     this.elements.confBtn2 = document.getElementById('confirmation-button-2');
                     this.elements.confContent2 = document.getElementById('confirmation-content-2');
+
+                    // Navbar
+                    this.elements.mobileMenuBtn = document.getElementById('mobile-menu-btn');
+                    this.elements.mobileMenu = document.getElementById('mobile-menu');
                 },
 
                 bindEvents() {
@@ -217,9 +255,15 @@
                     this.elements.prevBtn3.addEventListener('click', () => this.handlePrevStep());
                     this.elements.submitBtn.addEventListener('click', () => this.handleSubmit());
 
-                    // Confirmation accordion toggles
+                    // Accordion toggles
+                    this.elements.page2AccordionBtn.addEventListener('click', () => this.togglePage2Accordion());
                     this.elements.confBtn1.addEventListener('click', () => this.toggleConfirmationAccordion(1));
                     this.elements.confBtn2.addEventListener('click', () => this.toggleConfirmationAccordion(2));
+
+                    // Navbar toggle
+                    this.elements.mobileMenuBtn.addEventListener('click', () => {
+                        this.elements.mobileMenu.classList.toggle('hidden');
+                    });
                 },
 
                 render() {
@@ -230,8 +274,10 @@
                     // Populate form data if it exists (for 'Previous' button functionality)
                     this.populateForms();
 
-                    // If on the final step, render the confirmation details
-                    if (this.state.currentStep === 3) {
+                    // Render accordions based on the current step
+                    if (this.state.currentStep === 2) {
+                        this.renderPage2AccordionDetails();
+                    } else if (this.state.currentStep === 3) {
                         this.renderConfirmationDetails();
                     }
                 },
@@ -243,6 +289,16 @@
                             input.value = this.state.formData[key];
                         }
                     }
+                },
+
+                renderPage2AccordionDetails() {
+                    const data = this.state.formData;
+                    this.elements.page2AccordionContent.innerHTML = `
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm pt-4">
+                            <div><strong class="font-medium text-slate-500 block">Full Name</strong>${data.fullName || ''}</div>
+                            <div><strong class="font-medium text-slate-500 block">Email</strong>${data.email || ''}</div>
+                            <div><strong class="font-medium text-slate-500 block">Phone</strong>${data.phone || ''}</div>
+                        </div>`;
                 },
 
                 renderConfirmationDetails() {
@@ -258,6 +314,11 @@
                             <div><strong class="font-medium text-slate-500 block">Account Number</strong>${data.accountNumber || ''}</div>
                             <div><strong class="font-medium text-slate-500 block">IFSC Code</strong>${data.ifsc || ''}</div>
                         </div>`;
+                },
+
+                togglePage2Accordion() {
+                    this.elements.page2AccordionBtn.classList.toggle('active');
+                    this.elements.page2AccordionContent.classList.toggle('open');
                 },
 
                 toggleConfirmationAccordion(step) {
@@ -313,9 +374,39 @@
                     }
                 },
 
+                resetApp() {
+                    this.state.currentStep = 1;
+                    this.state.formData = {};
+                    this.elements.form1.reset();
+                    this.elements.form2.reset();
+                    // Close all accordions
+                    this.elements.page2AccordionBtn.classList.remove('active');
+                    this.elements.page2AccordionContent.classList.remove('open');
+                    this.elements.confBtn1.classList.remove('active');
+                    this.elements.confContent1.classList.remove('open');
+                    this.elements.confBtn2.classList.remove('active');
+                    this.elements.confContent2.classList.remove('open');
+                    this.render();
+                },
+
                 handleSubmit() {
                     console.log('Final Data Submitted:', this.state.formData);
-                    this.elements.successModal.classList.remove('hidden');
+                    const toast = this.elements.toast;
+
+                    // Show toast
+                    toast.classList.remove('opacity-0', 'translate-y-24');
+                    toast.classList.add('opacity-100', 'translate-y-0');
+
+                    // Hide toast and reset the application after a delay
+                    setTimeout(() => {
+                        toast.classList.remove('opacity-100', 'translate-y-0');
+                        toast.classList.add('opacity-0', 'translate-y-24');
+                        
+                        // Wait for the toast to animate out before resetting
+                        setTimeout(() => {
+                            this.resetApp();
+                        }, 500); // This duration should match the transition duration
+                    }, 3000); // Display the toast for 3 seconds
                 }
             };
 
