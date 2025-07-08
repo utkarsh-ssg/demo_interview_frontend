@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyKey - Onboarding</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom styles for a polished look */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .form-input {
+            transition: all 0.3s ease-in-out;
+        }
+        .form-input:focus {
+            box-shadow: 0 0 0 2px #3b82f6; /* blue-500 */
+            border-color: #3b82f6;
+        }
+        .error-message {
+            color: #ef4444; /* red-500 */
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+        .view {
+            display: none;
+        }
+        .view.active {
+            display: block;
+        }
+        .confirmation-accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out;
+        }
+        .confirmation-accordion-content.open {
+            max-height: 1000px; /* Large enough to fit content */
+        }
+        .confirmation-accordion-button.active .accordion-arrow {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+    <div id="app-container" class="flex flex-col min-h-screen">
+
+        <!-- Header -->
+        <header class="bg-white shadow-md sticky top-0 z-10">
+            <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+                <h1 class="text-2xl font-bold text-blue-600">EasyKey</h1>
+                <p class="text-sm text-slate-500 hidden sm:block">Secure Onboarding</p>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-grow container mx-auto px-4 sm:px-6 py-8 sm:py-12">
+            <div class="max-w-2xl mx-auto">
+                
+                <!-- Step 1: Personal Details View -->
+                <div id="view-1" class="view">
+                    <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-6 sm:p-8">
+                        <h2 class="text-xl sm:text-2xl font-bold text-slate-800 mb-1">Step 1: Personal Details</h2>
+                        <p class="text-slate-600 mb-6">Let's start with the basics.</p>
+                        <form id="form-1" class="space-y-4">
+                            <div>
+                                <label for="fullName" class="block text-sm font-medium text-slate-600 mb-1">Full Name</label>
+                                <input type="text" id="fullName" name="fullName" class="form-input w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none" required>
+                                <p class="error-message">Please enter your full name.</p>
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-slate-600 mb-1">Email Address</label>
+                                <input type="email" id="email" name="email" class="form-input w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none" required>
+                                <p class="error-message">Please enter a valid email address.</p>
+                            </div>
+                            <div>
+                                <label for="phone" class="block text-sm font-medium text-slate-600 mb-1">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" class="form-input w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none" required>
+                                <p class="error-message">Please enter a valid phone number.</p>
+                            </div>
+                            <div class="flex justify-end pt-4">
+                                <button type="button" id="next-btn-1" class="bg-blue-600 text-white font-semibold px-6 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">Next</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Step 2: Bank Details View -->
+                <div id="view-2" class="view">
+                     <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-6 sm:p-8">
+                        <h2 class="text-xl sm:text-2xl font-bold text-slate-800 mb-1">Step 2: Bank Details</h2>
+                        <p class="text-slate-600 mb-6">Your payment information is safe with us.</p>
+                        <form id="form-2" class="space-y-4">
+                            <div>
+                                <label for="accountNumber" class="block text-sm font-medium text-slate-600 mb-1">Account Number</label>
+                                <input type="text" id="accountNumber" name="accountNumber" class="form-input w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none" required pattern="\d{9,18}">
+                                <p class="error-message">Please enter a valid account number (9-18 digits).</p>
+                            </div>
+                            <div>
+                                <label for="ifsc" class="block text-sm font-medium text-slate-600 mb-1">IFSC Code</label>
+                                <input type="text" id="ifsc" name="ifsc" class="form-input w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none" required>
+                                <p class="error-message">IFSC Code cannot be empty.</p>
+                            </div>
+                            <div class="flex justify-between items-center pt-4">
+                                <button type="button" id="prev-btn-2" class="text-slate-600 font-semibold px-6 py-2 rounded-md hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-300 transition-colors">Previous</button>
+                                <button type="button" id="next-btn-2" class="bg-blue-600 text-white font-semibold px-6 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors">Next</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Step 3: Confirmation View -->
+                <div id="view-3" class="view">
+                    <h2 class="text-2xl sm:text-3xl font-bold text-center mb-2">Confirm Your Details</h2>
+                    <p class="text-slate-600 text-center mb-8">Please review your information before final submission.</p>
+
+                    <!-- Confirmation Accordions -->
+                    <div class="space-y-4">
+                        <!-- Personal Details Accordion -->
+                        <div class="accordion-item bg-white rounded-lg shadow-sm border border-slate-200">
+                            <button id="confirmation-button-1" class="confirmation-accordion-button w-full flex justify-between items-center text-left p-5 font-semibold text-slate-700 focus:outline-none">
+                                <span class="text-lg">Personal Details</span>
+                                <svg class="accordion-arrow w-5 h-5 text-slate-500 shrink-0 transition-transform duration-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" /></svg>
+                            </button>
+                            <div id="confirmation-content-1" class="confirmation-accordion-content p-5 pt-0">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+                        <!-- Bank Details Accordion -->
+                        <div class="accordion-item bg-white rounded-lg shadow-sm border border-slate-200">
+                            <button id="confirmation-button-2" class="confirmation-accordion-button w-full flex justify-between items-center text-left p-5 font-semibold text-slate-700 focus:outline-none">
+                                <span class="text-lg">Bank Details</span>
+                                <svg class="accordion-arrow w-5 h-5 text-slate-500 shrink-0 transition-transform duration-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" /></svg>
+                            </button>
+                            <div id="confirmation-content-2" class="confirmation-accordion-content p-5 pt-0">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between items-center pt-6">
+                        <button type="button" id="prev-btn-3" class="text-slate-600 font-semibold px-6 py-2 rounded-md hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-slate-300 transition-colors">Previous</button>
+                        <button type="button" id="submit-btn" class="w-auto bg-green-600 text-white font-bold px-8 py-3 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors">Submit Application</button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-white mt-12 py-6 border-t">
+            <div class="container mx-auto px-6 text-center">
+                <p class="text-sm text-slate-500">&copy; 2024 EasyKey Inc. All rights reserved.</p>
+            </div>
+        </footer>
+
+    </div>
+    
+    <!-- Success Modal -->
+    <div id="success-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg shadow-xl p-8 m-4 max-w-sm text-center">
+            <div class="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4">
+                <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+            </div>
+            <h3 class="text-2xl font-bold text-slate-800 mb-2">Success!</h3>
+            <p class="text-slate-600">Your application has been submitted successfully.</p>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            const App = {
+                state: {
+                    currentStep: 1,
+                    formData: {}
+                },
+                elements: {},
+
+                init() {
+                    this.cacheElements();
+                    this.bindEvents();
+                    this.render();
+                },
+
+                cacheElements() {
+                    this.elements.views = document.querySelectorAll('.view');
+                    this.elements.nextBtn1 = document.getElementById('next-btn-1');
+                    this.elements.nextBtn2 = document.getElementById('next-btn-2');
+                    this.elements.prevBtn2 = document.getElementById('prev-btn-2');
+                    this.elements.prevBtn3 = document.getElementById('prev-btn-3');
+                    this.elements.submitBtn = document.getElementById('submit-btn');
+                    this.elements.successModal = document.getElementById('success-modal');
+                    
+                    // Forms
+                    this.elements.form1 = document.getElementById('form-1');
+                    this.elements.form2 = document.getElementById('form-2');
+
+                    // Confirmation Accordions
+                    this.elements.confBtn1 = document.getElementById('confirmation-button-1');
+                    this.elements.confContent1 = document.getElementById('confirmation-content-1');
+                    this.elements.confBtn2 = document.getElementById('confirmation-button-2');
+                    this.elements.confContent2 = document.getElementById('confirmation-content-2');
+                },
+
+                bindEvents() {
+                    this.elements.nextBtn1.addEventListener('click', () => this.handleNextStep(1));
+                    this.elements.nextBtn2.addEventListener('click', () => this.handleNextStep(2));
+                    this.elements.prevBtn2.addEventListener('click', () => this.handlePrevStep());
+                    this.elements.prevBtn3.addEventListener('click', () => this.handlePrevStep());
+                    this.elements.submitBtn.addEventListener('click', () => this.handleSubmit());
+
+                    // Confirmation accordion toggles
+                    this.elements.confBtn1.addEventListener('click', () => this.toggleConfirmationAccordion(1));
+                    this.elements.confBtn2.addEventListener('click', () => this.toggleConfirmationAccordion(2));
+                },
+
+                render() {
+                    // Show/Hide Views
+                    this.elements.views.forEach(view => view.classList.remove('active'));
+                    document.getElementById(`view-${this.state.currentStep}`).classList.add('active');
+
+                    // Populate form data if it exists (for 'Previous' button functionality)
+                    this.populateForms();
+
+                    // If on the final step, render the confirmation details
+                    if (this.state.currentStep === 3) {
+                        this.renderConfirmationDetails();
+                    }
+                },
+                
+                populateForms() {
+                    for (const key in this.state.formData) {
+                        const input = document.getElementById(key);
+                        if (input) {
+                            input.value = this.state.formData[key];
+                        }
+                    }
+                },
+
+                renderConfirmationDetails() {
+                    const data = this.state.formData;
+                    this.elements.confContent1.innerHTML = `
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm pt-4">
+                            <div><strong class="font-medium text-slate-500 block">Full Name</strong>${data.fullName || ''}</div>
+                            <div><strong class="font-medium text-slate-500 block">Email</strong>${data.email || ''}</div>
+                            <div><strong class="font-medium text-slate-500 block">Phone</strong>${data.phone || ''}</div>
+                        </div>`;
+                    this.elements.confContent2.innerHTML = `
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm pt-4">
+                            <div><strong class="font-medium text-slate-500 block">Account Number</strong>${data.accountNumber || ''}</div>
+                            <div><strong class="font-medium text-slate-500 block">IFSC Code</strong>${data.ifsc || ''}</div>
+                        </div>`;
+                },
+
+                toggleConfirmationAccordion(step) {
+                    const button = this.elements[`confBtn${step}`];
+                    const content = this.elements[`confContent${step}`];
+                    button.classList.toggle('active');
+                    content.classList.toggle('open');
+                },
+
+                saveFormData(formStep) {
+                    const form = this.elements[`form${formStep}`];
+                    const formData = new FormData(form);
+                    for (let [key, value] of formData.entries()) {
+                        this.state.formData[key] = value;
+                    }
+                },
+
+                handleNextStep(formStep) {
+                    const form = this.elements[`form${formStep}`];
+                    let isValid = true;
+                    
+                    form.querySelectorAll('.error-message').forEach(el => el.style.display = 'none');
+                    form.querySelectorAll('.form-input').forEach(input => input.classList.remove('border-red-500'));
+
+                    const inputs = form.querySelectorAll('input[required]');
+                    inputs.forEach(input => {
+                        if (!input.checkValidity()) {
+                            isValid = false;
+                            input.classList.add('border-red-500');
+                            const errorMsg = input.nextElementSibling;
+                            if (errorMsg && errorMsg.classList.contains('error-message')) {
+                                errorMsg.style.display = 'block';
+                            }
+                        }
+                    });
+
+                    if (!isValid) return;
+
+                    this.saveFormData(formStep);
+                    this.state.currentStep++;
+                    this.render();
+                },
+
+                handlePrevStep() {
+                    // Save data from current form before going back
+                    if (this.state.currentStep === 2) {
+                        this.saveFormData(2);
+                    }
+                    
+                    if (this.state.currentStep > 1) {
+                        this.state.currentStep--;
+                        this.render();
+                    }
+                },
+
+                handleSubmit() {
+                    console.log('Final Data Submitted:', this.state.formData);
+                    this.elements.successModal.classList.remove('hidden');
+                }
+            };
+
+            App.init();
+        });
+    </script>
+
+</body>
+</html>
